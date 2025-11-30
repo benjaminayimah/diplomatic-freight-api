@@ -132,7 +132,7 @@ export const fetchInvoiceById = async (req, res) => {
     }
 
     // Generate QR Code URL (just string, not image yet)
-    const qrData = `${process.env.FRONTEND_URL}/invoice/verify/${invoice.reference_number}`;
+    const qrData = `${process.env.FRONTEND_URL}/app/verify-invoice/${invoice.reference_number}`;
 
     res.status(200).json({
       success: true,
