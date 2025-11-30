@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
-import sequelize from "./config/sequelize.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import bankRoutes from "./routes/bankRoutes.js";
@@ -11,28 +10,26 @@ import profileRoutes from "./routes/profileRoutes.js";
 import subscriberRoutes from "./routes/subscriberRoutes.js";
 import quoteRoutes from "./routes/quoteRoutes.js";
 
-dotenv.config();
-
 dotenv.config({
   path: process.env.NODE_ENV === "production" ? ".env.production" : ".env.development"
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4000;
 
 const app = express();
 
 app.use(express.json());
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: process.env.NODE_ENV === "production" ? undefined : false
+  })
+);
+
 
 // Test the database connection only (no sync in production)
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Database connected...");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
-  });
+// sequelize.authenticate()
+//   .then(() => {console.log("Database connected...")})
+//   .catch((err) => {console.error("Unable to connect to the database:", err)});
 
 
 
