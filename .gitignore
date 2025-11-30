@@ -1,0 +1,54 @@
+# -------------------------
+# COMMON
+# -------------------------
+node_modules/
+.env
+.env.local
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS/System files
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
+
+
+# -------------------------
+# EXPRESS BACKEND
+# -------------------------
+dist/         # If using Babel
+build/        # If using build process
+tmp/
+*.tmp
+
+# -------------------------
+# OPTIONAL
+# -------------------------
+# Local certificates
+*.pem
+
+# Uploaded files (if any)
+uploads/
+public/uploads/
+
+# PM2 logs
+.pids
+*.pid
+*.pid.lock
+
+# Coverage tools (Jest or others)
+coverage/
+
+# SQLite / similar DB files (optional)
+*.sqlite
+*.sqlite3
