@@ -2,27 +2,27 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize.js';
 
-const Invoice = sequelize.define('Invoice', {
+const Receipt = sequelize.define('Receipt', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  reference_number: {
+  receipt_number: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
   },
-  date_issue: {
-    type: DataTypes.DATE,
+  invoice_id: {
+    type: DataTypes.INTEGER,
     allowNull: true,
   },
-  date_due: {
+  paid_on: {
     type: DataTypes.DATE,
     allowNull: true
   },
-  date_of_departure: {
-    type: DataTypes.DATE,
+  payment_method: {
+    type: DataTypes.STRING,
     allowNull: true
   },
   items: {
@@ -45,29 +45,17 @@ const Invoice = sequelize.define('Invoice', {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  note: {
-    type: DataTypes.TEXT,
-    allowNull: true
-  },
   vat: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  paid: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-    validate: {
-      isIn: [[true, false]]
-    }
-  },
-  createdBy: {
+  issued_by: {
     type: DataTypes.STRING,
     allowNull: false
   }
 }, {
   timestamps: true,
-  tableName: 'invoices'
+  tableName: 'receipts'
 });
 
-export default Invoice;
+export default Receipt;

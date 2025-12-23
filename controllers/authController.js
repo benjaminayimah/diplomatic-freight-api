@@ -6,6 +6,7 @@ import Bank from "../models/Bank.js";
 import Invoice from "../models/Invoice.js";
 import Subscriber from "../models/Subscriber.js";
 import Quote from "../models/Quote.js";
+import Receipt from "../models/Receipt.js";
 import { validationResult } from "express-validator";
 
 
@@ -47,11 +48,12 @@ export const login = async (req, res) => {
       // Create Auth JWT token
       const token = createToken({ id: user.id, email: user.email })
 
-      const profile = await Profile.findOne({order: [['createdAt', 'ASC']]});
-      const banks = await Bank.findAll();
-      const invoices = await Invoice.findAll();
-      const subscribers = await Subscriber.findAll({ order: [['createdAt', 'DESC']] });
-      const quotes = await Quote.findAll({ order: [['createdAt', 'DESC']] });
+      // const profile = await Profile.findOne({order: [['createdAt', 'ASC']]});
+      // const banks = await Bank.findAll();
+      // const invoices = await Invoice.findAll();
+      // const subscribers = await Subscriber.findAll({ order: [['createdAt', 'DESC']] });
+      // const quotes = await Quote.findAll({ order: [['createdAt', 'DESC']] });
+      // const receipts = await Receipt.findAll({ order: [['createdAt', 'DESC']]});
 
 
       res.status(200).json({
@@ -59,17 +61,45 @@ export const login = async (req, res) => {
         message: 'Sign in successful',
         user,
         token,
-        profile,
-        banks,
-        invoices,
-        subscribers,
-        quotes
       });
   } catch (error) {
       res.status(500).json({ error: error.message });
   }
 
 };
+
+export const fetch = async (req, res) => {
+
+  try {
+      const id = req.user.id
+      // Find user by email
+      const user = await User.findOne({ where: { id } });
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      const profile = await Profile.findOne({order: [['createdAt', 'ASC']]});
+      const banks = await Bank.findAll();
+      const invoices = await Invoice.findAll();
+      const subscribers = await Subscriber.findAll({ order: [['createdAt', 'DESC']] });
+      const quotes = await Quote.findAll({ order: [['createdAt', 'DESC']] });
+      const receipts = await Receipt.findAll({ order: [['createdAt', 'DESC']]});
+
+
+      res.status(200).json({
+        success: true,
+        profile,
+        banks,
+        invoices,
+        subscribers,
+        quotes,
+        receipts
+      });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+};
+
 
 
 export const update = async (req, res) => {

@@ -9,6 +9,7 @@ import invoiceRoutes from "./routes/invoiceRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import subscriberRoutes from "./routes/subscriberRoutes.js";
 import quoteRoutes from "./routes/quoteRoutes.js";
+import receiptRoutes from "./routes/receiptRoutes.js"
 
 dotenv.config({
   path: process.env.NODE_ENV === "production" ? ".env.production" : ".env.development"
@@ -66,6 +67,7 @@ app.use("/api/invoice", invoiceRoutes);
 app.use("/api/bank", bankRoutes);
 app.use("/api/subscriber", subscriberRoutes);
 app.use("/api/quote", quoteRoutes);
+app.use("/api/receipt", receiptRoutes);
 
 
 // Error handling middleware

@@ -22,6 +22,7 @@ export const create = async (req, res) => {
   }
 
   const {
+    payment_method,
     bank_name,
     bank_branch,
     account_name,
@@ -31,6 +32,7 @@ export const create = async (req, res) => {
 
   try {
     const newBank = await Bank.create({
+      payment_method,
       bank_name,
       bank_branch,
       account_name,
@@ -55,6 +57,7 @@ export const update = async (req, res) => {
   try {
     const { id } = req.params
     const {
+      payment_method,
       bank_name,
       bank_branch,
       account_name,
@@ -65,6 +68,7 @@ export const update = async (req, res) => {
     const bank = await Bank.findOne({where: { id: id }});
 
     if (bank) {
+      bank.payment_method = payment_method
       bank.bank_name = bank_name;
       bank.bank_branch = bank_branch;
       bank.account_name = account_name;

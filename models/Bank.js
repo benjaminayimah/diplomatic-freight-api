@@ -8,6 +8,10 @@ const Bank = sequelize.define('Bank', {
     primaryKey: true,
     autoIncrement: true,
   },
+  payment_method: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   bank_name: {
     type: DataTypes.STRING,
     allowNull: false

@@ -2,64 +2,55 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('invoices', {
+    await queryInterface.createTable('receipts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      reference_number: {
+      receipt_number: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
       },
-      date_issue: {
-        type: Sequelize.DATE,
-        allowNull: true
+      invoice_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
       },
-      date_due: {
+      paid_on: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: true,
       },
-      date_of_departure: {
-        type: Sequelize.DATE,
-        allowNull: true
+      payment_method: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       items: {
         type: Sequelize.JSON,
-        allowNull: true
+        allowNull: true,
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
       },
       email: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
       },
       address: {
         type: Sequelize.TEXT,
-        allowNull: true
-      },
-      note: {
-        type: Sequelize.TEXT,
-        allowNull: true
+        allowNull: true,
       },
       vat: {
         type: Sequelize.STRING,
         allowNull: true
       },
-      paid: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
-      createdBy: {
+      issued_by: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
@@ -76,6 +67,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('invoices');
+    await queryInterface.dropTable('receipts');
   }
 };

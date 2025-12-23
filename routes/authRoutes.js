@@ -1,5 +1,5 @@
 import express from "express";
-import { login, update, updatePassword } from "../controllers/authController.js";
+import { login, update, fetch, updatePassword } from "../controllers/authController.js";
 import { loginValidation, userValidation, updatePasswordValidation } from '../middlewares/validationMiddleware.js';
 import rateLimit from "express-rate-limit";
 import { verifyToken } from "../middlewares/authMiddleware.js"; // <-- fixed import
@@ -19,7 +19,7 @@ const loginLimiter = rateLimit({
 // router.post("/register", registerValidation, register);
 router.post("/login", loginValidation, login);
 router.put("/:id", verifyToken, userValidation, update);
-
+router.get('/', verifyToken, fetch);
 router.post("/update-password", verifyToken, updatePasswordValidation, updatePassword)
 
 router.post("/logout", verifyToken, (req, res) => {

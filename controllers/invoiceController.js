@@ -33,6 +33,7 @@ export const create = async (req, res) => {
     email,
     phone,
     address,
+    note,
     vat
   } = req.body;
 
@@ -41,8 +42,7 @@ export const create = async (req, res) => {
   try {
    
     const reference_number = generateReferenceCode();
-    const user = await User.findByPk(req.user.id)
-    const createdBy = user.name
+    const createdBy = req.user.id
     
     const newInvoice = await Invoice.create({
       reference_number,
@@ -54,6 +54,7 @@ export const create = async (req, res) => {
       email,
       phone,
       address,
+      note,
       vat,
       createdBy
     });
@@ -89,6 +90,7 @@ export const update = async (req, res) => {
       email,
       phone,
       address,
+      note,
       vat
     } = req.body;
 
@@ -103,6 +105,7 @@ export const update = async (req, res) => {
       invoice.email = email;
       invoice.phone = phone;
       invoice.address = address;
+      invoice.note = note;
       invoice.vat = vat;
       await invoice.save();
 
@@ -127,6 +130,9 @@ export const fetchInvoiceById = async (req, res) => {
       Bank.findAll()
     ]);
 
+    const user = await User.findByPk(invoice?.createdBy)
+    const createdBy = user?.name
+
     if (!invoice) {
       return res.status(404).json({ success: false, message: "Invoice not found" });
     }
@@ -136,7 +142,7 @@ export const fetchInvoiceById = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: { invoice, profile, banks, qrData }
+      data: { invoice, profile, banks, qrData, createdBy }
     });
 
   } catch (error) {
@@ -176,7 +182,6 @@ export const verifyInvoice = async (req, res) => {
     });
   }
 }
-
 
 
 

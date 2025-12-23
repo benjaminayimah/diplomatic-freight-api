@@ -85,8 +85,10 @@ export const profileValidation = [
 ];
 
 
-// Validation middleware for bank details
+// Validation middleware for bank details 
 export const bankValidation = [
+  body('payment_method')
+    .notEmpty().withMessage('Payment method is required.'),
   body('bank_name')
     .notEmpty().withMessage('Bank name is required.'),
   body('account_name')
@@ -119,6 +121,19 @@ export const invoiceValidation = [
     .withMessage('Invalid date format.'),
 ];
 
+// Validation middleware for receipt
+export const receiptValidation = [
+  body('phone')
+    .optional({ checkFalsy: true })
+    .matches(/^\+?\d{1,3}\s?\(?\d{1,3}\)?[\s-]?\d{2,4}[\s-]?\d{2,4}[\s-]?\d{2,4}$/)
+    .withMessage('Invalid phone format.'),
+  body('paid_on')
+    .optional({ checkFalsy: true })
+    .isISO8601()
+    .toDate()
+    .withMessage('Invalid date format.')
+];
+
 
 export const updatePasswordValidation = [
   body("current_password")
@@ -148,8 +163,6 @@ export const updatePasswordValidation = [
       if (!user) {
         throw new Error("User not found.");
       }
-
-
       // Check new password is not the same as current
       if (req.body.current_password === newPassword) {
         throw new Error("New password cannot be the same as current password.");
