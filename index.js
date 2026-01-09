@@ -36,6 +36,7 @@ app.use(
 
 const allowedOrigins = [
   process.env.FRONTEND_URL, // http://localhost:3000
+  "https://diplomaticfreight.com",
   "http://localhost:3001"
 ];
 
