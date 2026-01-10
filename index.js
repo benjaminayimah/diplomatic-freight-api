@@ -35,7 +35,7 @@ app.use(
 
 
 const allowedOrigins = [
-  process.env.FRONTEND_URL, // http://localhost:3000
+  process.env.FRONTEND_URL,
   "https://diplomaticfreight.com",
   "https://diplomatic-freight.vercel.app",
   "http://localhost:3001"
