@@ -13,6 +13,7 @@ export const fetch = async (req, res) => {
   }
 };
 
+
 export const create = async (req, res) => {
 
   const errors = validationResult(req);
@@ -46,6 +47,7 @@ export const create = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 export const update = async (req, res) => {
   const errors = validationResult(req);
@@ -98,7 +100,6 @@ export const getBankById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 
 export const destroy = async (req, res) => {

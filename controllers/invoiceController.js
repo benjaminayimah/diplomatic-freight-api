@@ -2,7 +2,7 @@
 import Invoice from "../models/Invoice.js"
 import Profile from "../models/Profile.js";
 import User from "../models/User.js";
-import Bank from "../models/Bank.js";
+import payment from "../models/payment.js";
 
 import { validationResult } from "express-validator";
 // import { Op } from 'sequelize';
@@ -124,10 +124,10 @@ export const fetchInvoiceById = async (req, res) => {
     const { id } = req.params;
 
     // Fetch invoice + company profile in parallel
-    const [invoice, profile, banks] = await Promise.all([
+    const [invoice, profile, payments] = await Promise.all([
       Invoice.findByPk(id),
       Profile.findOne({ order: [['createdAt', 'DESC']] }), // latest profile
-      Bank.findAll()
+      payment.findAll()
     ]);
 
     const user = await User.findByPk(invoice?.createdBy)
@@ -142,7 +142,7 @@ export const fetchInvoiceById = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: { invoice, profile, banks, qrData, createdBy }
+      data: { invoice, profile, payments, qrData, createdBy }
     });
 
   } catch (error) {

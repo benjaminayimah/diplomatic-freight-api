@@ -88,14 +88,15 @@ export const profileValidation = [
 // Validation middleware for bank details 
 export const bankValidation = [
   body('payment_method')
-    .notEmpty().withMessage('Payment method is required.'),
-  body('bank_name')
-    .notEmpty().withMessage('Bank name is required.'),
-  body('account_name')
-    .notEmpty().withMessage('Account name is required.'),
-  body('account_number')
-    .notEmpty().withMessage('Account number is required.')
+    .notEmpty().withMessage('Payment method is required.')
 ];
+
+// Validation middleware for payment details 
+export const paymentValidation = [
+  body('payment_method')
+    .notEmpty().withMessage('Payment method is required.')
+];
+
 
 
 // Validation middleware for invoice

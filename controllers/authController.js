@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import Profile from "../models/Profile.js";
 import Bank from "../models/Bank.js";
+import Payment from "../models/Payment.js";
 import Invoice from "../models/Invoice.js";
 import Subscriber from "../models/Subscriber.js";
 import Quote from "../models/Quote.js";
@@ -79,7 +80,7 @@ export const fetch = async (req, res) => {
       }
 
       const profile = await Profile.findOne({order: [['createdAt', 'ASC']]});
-      const banks = await Bank.findAll();
+      const payments = await Payment.findAll();
       const invoices = await Invoice.findAll();
       const subscribers = await Subscriber.findAll({ order: [['createdAt', 'DESC']] });
       const quotes = await Quote.findAll({ order: [['createdAt', 'DESC']] });
@@ -89,7 +90,7 @@ export const fetch = async (req, res) => {
       res.status(200).json({
         success: true,
         profile,
-        banks,
+        payments,
         invoices,
         subscribers,
         quotes,

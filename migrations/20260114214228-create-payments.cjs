@@ -2,54 +2,50 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const table = await queryInterface.describeTable('profiles').catch(() => null);
+    const table = await queryInterface.describeTable('payments').catch(() => null);
     if (!table) {
-      await queryInterface.createTable('profiles', {
+      await queryInterface.createTable('payments', {
         id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        company_name: {
-          type: Sequelize.STRING,
-          allowNull: false
+        payment_method: {
+          type: Sequelize.ENUM('bank_transfer', 'usdt_wallet'),
+          allowNull: false,
         },
-        email: {
+        bank_name: {
           type: Sequelize.STRING,
-          allowNull: false
+          allowNull: true,
         },
-        phone: {
+        account_name: {
           type: Sequelize.STRING,
-          allowNull: true
+          allowNull: true,
         },
-        mobile: {
+        bank_branch: {
           type: Sequelize.STRING,
-          allowNull: true
+          allowNull: true,
         },
-        address_line_1: {
+        account_number: {
           type: Sequelize.STRING,
-          allowNull: true
+          allowNull: true,
         },
-        address_line_2: {
+        swift_code: {
           type: Sequelize.STRING,
-          allowNull: true
+          allowNull: true,
         },
-        address_line_3: {
+        wallet_address: {
           type: Sequelize.STRING,
-          allowNull: true
+          allowNull: true,
         },
-        po_box: {
+        network: {
           type: Sequelize.STRING,
-          allowNull: true
+          allowNull: true,
         },
-        website: {
+        qr_code: {
           type: Sequelize.STRING,
-          allowNull: true
-        },
-        tagline: {
-          type: Sequelize.STRING,
-          allowNull: true
+          allowNull: true,
         },
         createdAt: {
           type: Sequelize.DATE,
@@ -62,10 +58,9 @@ module.exports = {
           defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
         }
       });
-
     }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('profiles');
+    await queryInterface.dropTable('payments');
   }
 };
