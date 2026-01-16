@@ -2,7 +2,7 @@
 import Invoice from "../models/Invoice.js"
 import Profile from "../models/Profile.js";
 import User from "../models/User.js";
-import payment from "../models/payment.js";
+import payment from "../models/Payment.js";
 
 import { validationResult } from "express-validator";
 // import { Op } from 'sequelize';

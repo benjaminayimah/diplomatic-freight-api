@@ -2,7 +2,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import Profile from "../models/Profile.js";
-import Bank from "../models/Bank.js";
 import Payment from "../models/Payment.js";
 import Invoice from "../models/Invoice.js";
 import Subscriber from "../models/Subscriber.js";
