@@ -4,7 +4,6 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 
 import authRoutes from "./routes/authRoutes.js";
-import bankRoutes from "./routes/bankRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import invoiceRoutes from "./routes/invoiceRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
@@ -68,7 +67,6 @@ app.get("/api", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/invoice", invoiceRoutes);
-app.use("/api/bank", bankRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/subscriber", subscriberRoutes);
 app.use("/api/quote", quoteRoutes);

@@ -85,11 +85,7 @@ export const profileValidation = [
 ];
 
 
-// Validation middleware for bank details 
-export const bankValidation = [
-  body('payment_method')
-    .notEmpty().withMessage('Payment method is required.')
-];
+
 
 // Validation middleware for payment details 
 export const paymentValidation = [
@@ -174,7 +170,7 @@ export const updatePasswordValidation = [
 ];
 
 
-// Subscriber middleware for bank details
+// Subscriber middleware for email details
 export const subscriberValidation = [
   body('email')
     .notEmpty().withMessage('Email is required.')

@@ -48,14 +48,6 @@ export const login = async (req, res) => {
       // Create Auth JWT token
       const token = createToken({ id: user.id, email: user.email })
 
-      // const profile = await Profile.findOne({order: [['createdAt', 'ASC']]});
-      // const banks = await Bank.findAll();
-      // const invoices = await Invoice.findAll();
-      // const subscribers = await Subscriber.findAll({ order: [['createdAt', 'DESC']] });
-      // const quotes = await Quote.findAll({ order: [['createdAt', 'DESC']] });
-      // const receipts = await Receipt.findAll({ order: [['createdAt', 'DESC']]});
-
-
       res.status(200).json({
         success: true,
         message: 'Sign in successful',
