@@ -1,12 +1,29 @@
 
-import Payment from "../models/Payment.js"
+import db from "../models/index.js";
+
+const {
+  Invoice,
+  Payment,
+  InvoicePayment
+} = db;
 
 import { validationResult } from "express-validator";
 
 
 export const fetch = async (req, res) => {
   try {
-    const payments = await Payment.findAll();
+    const payments = await Payment.findAll({
+      include: [
+        {
+          model: Invoice,
+          as: "invoices",
+          attributes: ["reference_number", "id"],
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
     res.status(200).json({success: true, data: payments});
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -31,7 +48,6 @@ export const create = async (req, res) => {
     swift_code,
     wallet_address,
     network,
-    qr_code,
   } = req.body;
 
   try {
@@ -43,8 +59,7 @@ export const create = async (req, res) => {
       account_number,
       swift_code,
       wallet_address,
-      network,
-      qr_code
+      network
     });
 
     res.status(201).json({ success: true, data: newPayment, message: 'Payment is created successfully!'});
@@ -72,7 +87,6 @@ export const update = async (req, res) => {
       swift_code,
       wallet_address,
       network,
-      qr_code
     } = req.body;
 
     const payment = await Payment.findOne({where: { id: id }});
@@ -86,7 +100,6 @@ export const update = async (req, res) => {
       payment.swift_code = swift_code;
       payment.wallet_address = wallet_address;
       payment.network = network;
-      payment.qr_code = qr_code;
 
       await payment.save();
 
@@ -115,17 +128,44 @@ export const getPaymentById = async (req, res) => {
 export const destroy = async (req, res) => {
   try {
     const { id } = req.params;
+
     const payment = await Payment.findByPk(id);
 
     if (!payment) {
-      return res.status(404).json({ error: 'Payment not found' });
+      return res.status(404).json({
+        error: "Payment not found"
+      });
+    }
+
+    const usedInvoices = await InvoicePayment.findAll({
+    where: { payment_id: id},
+      include: [
+        {
+          model: Invoice,
+          as: "invoice",
+          attributes: ["reference_number"]
+        }
+      ]
+    });
+
+    if (usedInvoices.length > 0) {
+      
+
+      return res.status(409).json({
+        error: "This payment method is currently used by invoices and cannot be deleted."
+      });
     }
 
     await payment.destroy();
 
-    res.status(200).json({ success: true, message: 'Payment has been deleted' });
+    return res.status(200).json({
+      success: true,
+      message: "Payment has been deleted"
+    });
 
   } catch (error) {
-      res.status(500).json({ error: error.message });
+    return res.status(500).json({
+      error: error.message
+    });
   }
 };

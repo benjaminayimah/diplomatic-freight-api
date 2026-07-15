@@ -39,14 +39,20 @@ const Payment = sequelize.define('Payment', {
   network: {
     type: DataTypes.STRING,
     allowNull: true
-  },
-  qr_code: {
-    type: DataTypes.STRING,
-    allowNull: true
   }
 }, {
   timestamps: true,
   tableName: 'payments'
 });
+
+
+Payment.associate = (models) => {
+  Payment.belongsToMany(models.Invoice, {
+    through: models.InvoicePayment,
+    foreignKey: "payment_id",
+    otherKey: "invoice_id",
+    as: "invoices",
+  });
+};
 
 export default Payment;

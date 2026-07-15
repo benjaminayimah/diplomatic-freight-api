@@ -1,5 +1,7 @@
 
-import Quote from "../models/Quote.js";
+
+import db from "../models/index.js";
+const { Quote } = db;
 
 import { validationResult } from "express-validator";
 

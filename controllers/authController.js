@@ -1,13 +1,19 @@
+
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
-import Profile from "../models/Profile.js";
-import Payment from "../models/Payment.js";
-import Invoice from "../models/Invoice.js";
-import Subscriber from "../models/Subscriber.js";
-import Quote from "../models/Quote.js";
-import Receipt from "../models/Receipt.js";
 import { validationResult } from "express-validator";
+
+
+import db from "../models/index.js";
+const {
+  User,
+  Invoice,
+  Payment,
+  Profile,
+  Quote,
+  Subscriber,
+  Receipt
+} = db;
 
 
 // JWT secret and expiration
@@ -70,9 +76,33 @@ export const fetch = async (req, res) => {
         return res.status(404).json({ error: 'User not found' });
       }
 
+      const invoices = await Invoice.findAll({
+        include: {
+          model: Payment,
+          as: "payments",
+          through: {
+            attributes: [] // hides invoice_payments fields
+          }
+        },
+        order: [
+          ['createdAt', 'DESC']
+        ]
+      });
+
+      const payments = await Payment.findAll({
+        include: [
+          {
+            model: Invoice,
+            as: "invoices",
+            attributes: ["reference_number", "id"],
+            through: {
+              attributes: []
+            }
+          }
+        ]
+      });
+
       const profile = await Profile.findOne({order: [['createdAt', 'ASC']]});
-      const payments = await Payment.findAll();
-      const invoices = await Invoice.findAll();
       const subscribers = await Subscriber.findAll({ order: [['createdAt', 'DESC']] });
       const quotes = await Quote.findAll({ order: [['createdAt', 'DESC']] });
       const receipts = await Receipt.findAll({ order: [['createdAt', 'DESC']]});

@@ -1,5 +1,7 @@
 
-import Subscriber from "../models/Subscriber.js";
+
+import db from "../models/index.js";
+const { Subscriber } = db;
 
 import { validationResult } from "express-validator";
 

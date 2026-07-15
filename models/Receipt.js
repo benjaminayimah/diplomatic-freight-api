@@ -25,6 +25,10 @@ const Receipt = sequelize.define('Receipt', {
     type: DataTypes.STRING,
     allowNull: true
   },
+  currency: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   items: {
     type: DataTypes.JSON,
     allowNull: true

@@ -1,7 +1,10 @@
 
-import Receipt from "../models/Receipt.js";
-import Profile from "../models/Profile.js";
-import User from "../models/User.js";
+import db from "../models/index.js";
+const {
+  User,
+  Profile,
+  Receipt
+} = db;
 
 import { validationResult } from "express-validator";
 // import { Op } from 'sequelize';
@@ -18,6 +21,7 @@ export const fetch = async (req, res) => {
 };
 
 export const create = async (req, res) => {
+  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -27,6 +31,7 @@ export const create = async (req, res) => {
     id,
     paid_on,
     payment_method,
+    currency,
     items,
     name,
     email,
@@ -48,6 +53,7 @@ export const create = async (req, res) => {
       invoice_id,
       paid_on: parseDate(paid_on),
       payment_method,
+      currency,
       items,
       name,
       email,
@@ -82,6 +88,7 @@ export const update = async (req, res) => {
     const {
       paid_on,
       payment_method,
+      currency,
       items,
       name,
       email,
@@ -95,6 +102,7 @@ export const update = async (req, res) => {
     if (receipt) {
       receipt.paid_on = parseDate(paid_on);
       receipt.payment_method = payment_method;
+      receipt.currency = currency;
       receipt.items = items;
       receipt.name = name;
       receipt.email = email;

@@ -1,5 +1,7 @@
 
-import Profile from "../models/Profile.js"
+
+import db from "../models/index.js";
+const { Profile } = db;
 
 import { validationResult } from "express-validator";
 

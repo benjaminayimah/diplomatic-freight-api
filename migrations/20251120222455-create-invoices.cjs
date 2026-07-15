@@ -28,6 +28,10 @@ module.exports = {
           type: Sequelize.DATE,
           allowNull: true
         },
+        currency: {
+          type: Sequelize.STRING,
+          allowNull: true
+        },
         items: {
           type: Sequelize.JSON,
           allowNull: true
@@ -61,9 +65,18 @@ module.exports = {
           allowNull: false,
           defaultValue: false,
         },
+        has_refund_policy: {
+          type: Sequelize.BOOLEAN,
+          allowNull: false,
+          defaultValue: true,
+        },
         createdBy: {
           type: Sequelize.INTEGER,
           allowNull: false
+        },
+        personal_note: {
+          type: Sequelize.TEXT,
+          allowNull: true
         },
         createdAt: {
           type: Sequelize.DATE,

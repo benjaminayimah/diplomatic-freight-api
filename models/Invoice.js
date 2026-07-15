@@ -25,6 +25,10 @@ const Invoice = sequelize.define('Invoice', {
     type: DataTypes.DATE,
     allowNull: true
   },
+  currency: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   items: {
     type: DataTypes.JSON,
     allowNull: true
@@ -61,13 +65,35 @@ const Invoice = sequelize.define('Invoice', {
       isIn: [[true, false]]
     }
   },
+  has_refund_policy: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+    validate: {
+      isIn: [[true, false]]
+    }
+  },
   createdBy: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  personal_note: {
+    type: DataTypes.TEXT,
+    allowNull: true
   }
 }, {
   timestamps: true,
   tableName: 'invoices'
 });
+
+Invoice.associate = (models) => {
+  Invoice.belongsToMany(models.Payment, {
+    through: models.InvoicePayment,
+    foreignKey: "invoice_id",
+    otherKey: "payment_id",
+    as: "payments",
+  });
+};
+
 
 export default Invoice;
