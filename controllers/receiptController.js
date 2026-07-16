@@ -7,8 +7,9 @@ const {
 } = db;
 
 import { validationResult } from "express-validator";
-// import { Op } from 'sequelize';
 import crypto from "crypto";
+import { getRandomColor } from '../utils/ColorTrait.js'
+
 
 
 export const fetch = async (req, res) => {
@@ -45,6 +46,7 @@ export const create = async (req, res) => {
   try {
    
     const receipt_number = generateReceiptNumber();
+    const color = getRandomColor()
     const issued_by = req.user.id
     const invoice_id = id ? id : null
     
@@ -60,7 +62,8 @@ export const create = async (req, res) => {
       phone,
       address,
       vat,
-      issued_by
+      issued_by,
+      color
     });
 
     res.status(201).json({

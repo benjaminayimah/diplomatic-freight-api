@@ -10,8 +10,8 @@ const {
 } = db;
 
 import { validationResult } from "express-validator";
-// import { Op } from 'sequelize';
 import crypto from "crypto";
+import { getRandomColor } from '../utils/ColorTrait.js'
 
 
 export const fetch = async (req, res) => {
@@ -63,6 +63,7 @@ export const create = async (req, res) => {
 
   try {
    
+    const color = getRandomColor()
     const reference_number = generateReferenceCode();
     const createdBy = req.user.id
     
@@ -81,7 +82,8 @@ export const create = async (req, res) => {
       vat,
       createdBy,
       has_refund_policy,
-      personal_note
+      personal_note,
+      color
     });
 
 
@@ -152,7 +154,7 @@ export const update = async (req, res) => {
       invoice.vat = vat;
       invoice.currency = currency;
       invoice.has_refund_policy = has_refund_policy,
-      invoice.personal_note = personal_note
+      invoice.personal_note = personal_note,
       await invoice.save();
 
       // Attach payment methods

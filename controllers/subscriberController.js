@@ -4,6 +4,7 @@ import db from "../models/index.js";
 const { Subscriber } = db;
 
 import { validationResult } from "express-validator";
+import { getRandomColor } from '../utils/ColorTrait.js'
 
 
 export const fetch = async (req, res) => {
@@ -26,8 +27,10 @@ export const create = async (req, res) => {
   const { email } = req.body;
 
   try {
+
+    const color = getRandomColor()
    
-    const subscriber = await Subscriber.create({ email });
+    const subscriber = await Subscriber.create({ email, color });
 
     res.status(201).json({
       success: true,

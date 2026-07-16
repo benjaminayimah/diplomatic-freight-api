@@ -4,6 +4,8 @@ import db from "../models/index.js";
 const { Quote } = db;
 
 import { validationResult } from "express-validator";
+import { getRandomColor } from '../utils/ColorTrait.js'
+
 
 
 export const fetch = async (req, res) => {
@@ -36,6 +38,8 @@ export const create = async (req, res) => {
   } = req.body;
 
   try {
+
+    const color = getRandomColor()
    
     const quote = await Quote.create({
       name,
@@ -47,7 +51,8 @@ export const create = async (req, res) => {
       weight,
       dimensions,
       shipping_date,
-      additional_info
+      additional_info,
+      color
     });
 
     res.status(201).json({

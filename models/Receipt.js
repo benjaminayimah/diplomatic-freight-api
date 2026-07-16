@@ -56,6 +56,10 @@ const Receipt = sequelize.define('Receipt', {
   issued_by: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  color: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   timestamps: true,

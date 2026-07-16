@@ -60,6 +60,10 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false
         },
+        color: {
+          type: Sequelize.STRING,
+          allowNull: true
+        },
         createdAt: {
           type: Sequelize.DATE,
           allowNull: false,

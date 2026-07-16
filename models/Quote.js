@@ -50,6 +50,10 @@ const Quote = sequelize.define('Quote', {
   additional_info: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  color: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   timestamps: true,

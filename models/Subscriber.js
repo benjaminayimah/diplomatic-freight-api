@@ -13,6 +13,10 @@ const Subscriber = sequelize.define('Subscriber', {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
+  },
+  color: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   timestamps: true,

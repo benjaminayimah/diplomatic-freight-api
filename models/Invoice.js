@@ -80,6 +80,10 @@ const Invoice = sequelize.define('Invoice', {
   personal_note: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  color: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   timestamps: true,
