@@ -38,7 +38,8 @@ export const create = async (req, res) => {
     email,
     phone,
     address,
-    vat
+    vat,
+    brandColor
   } = req.body;
 
   // return res.status(200).json({me: req.body})
@@ -46,7 +47,7 @@ export const create = async (req, res) => {
   try {
    
     const receipt_number = generateReceiptNumber();
-    const color = getRandomColor()
+    const color = brandColor || getRandomColor()
     const issued_by = req.user.id
     const invoice_id = id ? id : null
     
