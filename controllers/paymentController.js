@@ -39,7 +39,7 @@ export const create = async (req, res) => {
     return res.status(422).json({ errors: errors.array() });
   }
 
-  const {
+  let {
     payment_method,
     bank_name,
     bank_branch,
@@ -51,6 +51,18 @@ export const create = async (req, res) => {
   } = req.body;
 
   try {
+    if (payment_method === "bank_transfer") {
+      wallet_address = null;
+      network = null
+    }
+    else if (payment_method === "usdt_wallet") {
+      bank_name = null;
+      bank_branch = null;
+      account_name = null;
+      account_number = null;
+      swift_code = null;
+    }
+
     const newPayment = await Payment.create({
       payment_method,
       bank_name,
@@ -78,7 +90,7 @@ export const update = async (req, res) => {
 
   try {
     const { id } = req.params
-    const {
+    let {
       payment_method,
       bank_name,
       bank_branch,
@@ -88,6 +100,18 @@ export const update = async (req, res) => {
       wallet_address,
       network,
     } = req.body;
+    
+    if (payment_method === "bank_transfer") {
+      wallet_address = null;
+      network = null
+    }
+    else if (payment_method === "usdt_wallet") {
+      bank_name = null;
+      bank_branch = null;
+      account_name = null;
+      account_number = null;
+      swift_code = null;
+    }
 
     const payment = await Payment.findOne({where: { id: id }});
 
